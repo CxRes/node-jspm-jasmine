@@ -10,12 +10,30 @@ import { remap } from "remap-istanbul";
 import inlineSourceMap from "inline-source-map-comment";
 import chalk from 'chalk';
 import mkdirp from 'mkdirp';
+import exit from 'exit';
 
 import Timer from './timer.js';
 import * as Mocker from './mocker.js';
 import { isWatching, initWatcher, watchFile, finishedTestRun as notifyWatcherFinishedTestRun } from './watcher.js';
 
-export function runTests(opts, errCallback = function() {}) {
+function errorCallbackDefault(err, safeExit, optionalMessage) {
+	if (err) {
+		console.log(chalk.red(err && err.stack ? err.stack : err));
+	}
+	if (optionalMessage) {
+		console.log('');
+		console.log(chalk.inverse(optionalMessage));
+	}
+	if (!isWatching()) {
+		if (safeExit) {
+			safeExit();
+		} else {
+			exit(1);
+		}
+	}
+}
+
+export function runTests(opts, errCallback = errorCallbackDefault) {
 	opts.watchFiles = opts.watchFiles || [];
 	initWatcher(!!opts.watch || opts.watchFiles.length > 0, opts, errCallback);
 
