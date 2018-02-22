@@ -135,6 +135,12 @@ runTests({
   // Defaults to path where `jspmjasmine` is being executed
   packagePath: "RELATIVE/PATH/TO/PACKAGE/JSON/DIRECTORY/",
 
+  // Provide custom reporters
+  // If you add a reporter, the default Console Reporter will not be added
+  reporters: new CustomReporterClass()
+  // You can also specify multiple reporters
+  // reporters: [new CustomReporterClass1(), new CustomReporterClass1()]
+
   // Add a coverage report
   // Defaults to undefined
   coverage: {

@@ -91,6 +91,15 @@ export function runTests(opts, errCallback = errorCallbackDefault) {
 
 	const watchFilesGlobs = opts.watchFiles || [];
 
+	if (opts.reporters) {
+		if (!Array.isArray(opts.reporters)) {
+			opts.reporters = [opts.reporters];
+		}
+		opts.reporters.forEach((reporter) => {
+			jasmine.addReporter(reporter);
+		});
+	}
+
 	try {
 		const systemInstantiate = SystemJS.instantiate;
 
