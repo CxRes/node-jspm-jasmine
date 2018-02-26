@@ -91,13 +91,13 @@ export function runTests(opts, errCallback = errorCallbackDefault) {
 
 	const watchFilesGlobs = opts.watchFiles || [];
 
-	if (opts.reporters) {
-		if (!Array.isArray(opts.reporters)) {
-			opts.reporters = [opts.reporters];
+	if (opts.reporter) {
+		if (!Array.isArray(opts.reporter)) {
+			opts.reporter = [opts.reporter];
 		}
-		opts.reporters.forEach((reporter) => {
+		opts.reporter.forEach((reporter) => {
 			jasmine.addReporter(reporter);
-		});
+		})
 	}
 
 	try {
